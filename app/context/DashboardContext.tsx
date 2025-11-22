@@ -6,9 +6,9 @@ export type MonthlyReport = {
   id: string;
   month: string;
   revenue: number;
-  expenses: number; // Operational expenses (Server, Salaries)
-  marketingSpend: number; // Ad spend
-  users: number; // New users acquired
+  expenses: number;
+  marketingSpend: number;
+  users: number;
 };
 
 type DashboardContextType = {
@@ -21,16 +21,32 @@ type DashboardContextType = {
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
 
+// Default "Seed" Data for new visitors
+const initialData: MonthlyReport[] = [
+  { id: "1", month: "August 2025", revenue: 98345, expenses: 43000, marketingSpend: 5011, users: 343 },
+  { id: "2", month: "September 2025", revenue: 131821, expenses: 70000, marketingSpend: 9035, users: 635 },
+  { id: "3", month: "October 2025", revenue: 179938, expenses: 85000, marketingSpend: 12077, users: 1474 },
+  { id: "4", month: "November 2025", revenue: 212783, expenses: 40000, marketingSpend: 7766, users: 1459 },
+];
+
 export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [reports, setReports] = useState<MonthlyReport[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("dashboard_data_v2"); // Changed key to reset old data
-    if (saved) setReports(JSON.parse(saved));
+    // Check LocalStorage first
+    const saved = localStorage.getItem("dashboard_data_v3"); // New key to force refresh
+    if (saved) {
+      setReports(JSON.parse(saved));
+    } else {
+      // If empty, load the Seed Data
+      setReports(initialData);
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("dashboard_data_v2", JSON.stringify(reports));
+    if (reports.length > 0) {
+      localStorage.setItem("dashboard_data_v3", JSON.stringify(reports));
+    }
   }, [reports]);
 
   const addReport = (report: MonthlyReport) => {
