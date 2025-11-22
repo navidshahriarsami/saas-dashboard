@@ -1,31 +1,64 @@
-import { LayoutDashboard, Users, Settings, BarChart3 } from "lucide-react";
+"use client";
+
+import { LayoutDashboard, BarChart3, Waypoints } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 }, // Changed from #
-  { name: "Users", href: "/users", icon: Users },             // Changed from #
-  { name: "Settings", href: "/settings", icon: Settings },    // Changed from #
+  { name: "Analytics", href: "/analytics", icon: BarChart3 },
 ];
 
 export function Sidebar() {
+  const pathname = usePathname();
+  
   return (
-    <div className="flex h-screen w-64 flex-col bg-slate-900 text-white">
-      <div className="flex h-16 items-center justify-center border-b border-slate-800">
-        <h1 className="text-xl font-bold">TaskFlow</h1>
+    <div className="hidden md:flex h-screen w-72 flex-col p-4">
+      {/* Glass Container */}
+      <div className="flex h-full flex-col rounded-3xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl shadow-2xl">
+        
+        {/* Logo Area */}
+        <div className="flex h-24 items-center justify-center border-b border-zinc-800/50">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 shadow-lg shadow-emerald-500/20">
+              <Waypoints className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-white">TaskFlow</h1>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 space-y-2 px-4 py-8">
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`group flex items-center rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-200 
+                  ${isActive 
+                    ? "bg-emerald-500/10 text-white shadow-lg shadow-emerald-500/5" 
+                    : "text-zinc-400 hover:bg-emerald-500/10 hover:text-white hover:shadow-lg hover:shadow-emerald-500/5"
+                  }`}
+              >
+                <item.icon className={`mr-4 h-5 w-5 transition-colors ${isActive ? "text-emerald-400" : "text-zinc-500 group-hover:text-emerald-400"}`} />
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User Profile (Bottom) */}
+        <div className="border-t border-zinc-800/50 p-4">
+          <div className="flex items-center gap-3 rounded-xl bg-zinc-950/50 p-3 border border-zinc-800">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-500" />
+            <div>
+              <p className="text-sm font-bold text-white">Admin User</p>
+              <p className="text-xs text-zinc-500">Pro Plan</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <nav className="flex-1 space-y-1 px-2 py-4">
-        {navigation.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white"
-          >
-            <item.icon className="mr-3 h-6 w-6 flex-shrink-0 text-slate-400 group-hover:text-white" />
-            {item.name}
-          </Link>
-        ))}
-      </nav>
     </div>
   );
 }

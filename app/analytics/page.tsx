@@ -4,14 +4,17 @@ import { AdminGuard } from "../components/AdminGuard";
 export default function AnalyticsPage() {
   return (
     <AdminGuard>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">Financial Reports</h1>
-          <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-white">Financial Reports</h1>
+            <p className="text-zinc-400 mt-1">Manage monthly financial data & ROI.</p>
+          </div>
+          <span className="rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-sm font-medium text-indigo-400">
             Confidential
           </span>
         </div>
-        <p className="text-gray-500">Manage monthly financial data.</p>
+        
         <ReportsTable />
       </div>
     </AdminGuard>
