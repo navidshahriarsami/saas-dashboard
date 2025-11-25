@@ -50,16 +50,16 @@ export function DashboardStats() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
-        <div key={stat.name} className="rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-6 shadow-sm hover:border-zinc-700 transition-colors">
+        <div key={stat.name} className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm hover:border-emerald-200 transition-colors">
           <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h3 className="text-sm font-medium text-zinc-400">{stat.name}</h3>
-            <stat.icon className={`h-4 w-4 ${stat.name === "Total Revenue" ? "text-emerald-400" : "text-zinc-500"}`} />
+            <h3 className="text-sm font-medium text-zinc-500">{stat.name}</h3>
+            <stat.icon className={`h-4 w-4 ${stat.name === "Total Revenue" ? "text-emerald-600" : "text-zinc-400"}`} />
           </div>
-          <div className="text-2xl font-bold text-white">{stat.value}</div>
+          <div className="text-2xl font-bold text-zinc-900">{stat.value}</div>
 
           <div className="flex items-center mt-1">
             {stat.trend !== undefined && (
-              <span className={`flex items-center text-xs font-medium mr-2 ${stat.trend >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+              <span className={`flex items-center text-xs font-medium mr-2 ${stat.trend >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
                 {stat.trend >= 0 ? <TrendingUp className="mr-1 h-3 w-3" /> : <TrendingDown className="mr-1 h-3 w-3" />}
                 {Math.abs(stat.trend).toFixed(1)}%
               </span>

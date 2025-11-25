@@ -25,7 +25,6 @@ export function UnitEconomicsWidget() {
     const churnRate = latest.totalUsers > 0 ? latest.churnedUsers / latest.totalUsers : 0;
 
     // 4. LTV (Lifetime Value) = ARPU / Churn Rate
-    // If Churn is 0, we cap LTV or show infinity. Let's cap it at 50x ARPU for safety or just show a high number.
     const ltv = churnRate > 0 ? arpu / churnRate : 0;
 
     // 5. LTV:CAC Ratio
@@ -42,31 +41,31 @@ export function UnitEconomicsWidget() {
     return (
         <div className="grid gap-4 md:grid-cols-3">
             {/* LTV Card */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-6 shadow-sm">
+            <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center justify-between">
                     <div>
-                        <p className="text-sm font-medium text-zinc-400">Customer LTV</p>
-                        <p className="mt-2 text-3xl font-bold text-white">{fmt(ltv)}</p>
+                        <p className="text-sm font-medium text-zinc-500">Customer LTV</p>
+                        <p className="mt-2 text-3xl font-bold text-zinc-900">{fmt(ltv)}</p>
                     </div>
-                    <div className="rounded-full bg-indigo-500/10 p-3 text-indigo-400">
+                    <div className="rounded-full bg-indigo-50 p-3 text-indigo-600">
                         <Users className="h-6 w-6" />
                     </div>
                 </div>
                 <div className="mt-4 flex items-center text-xs text-zinc-500">
-                    <span className="text-zinc-400">ARPU: {fmt(arpu)}</span>
+                    <span className="text-zinc-500">ARPU: {fmt(arpu)}</span>
                     <span className="mx-2">•</span>
-                    <span className="text-rose-400">Churn: {(churnRate * 100).toFixed(1)}%</span>
+                    <span className="text-rose-500">Churn: {(churnRate * 100).toFixed(1)}%</span>
                 </div>
             </div>
 
             {/* CAC Card */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-6 shadow-sm">
+            <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center justify-between">
                     <div>
-                        <p className="text-sm font-medium text-zinc-400">CAC</p>
-                        <p className="mt-2 text-3xl font-bold text-white">{fmt(cac)}</p>
+                        <p className="text-sm font-medium text-zinc-500">CAC</p>
+                        <p className="mt-2 text-3xl font-bold text-zinc-900">{fmt(cac)}</p>
                     </div>
-                    <div className="rounded-full bg-rose-500/10 p-3 text-rose-400">
+                    <div className="rounded-full bg-rose-50 p-3 text-rose-500">
                         <CreditCard className="h-6 w-6" />
                     </div>
                 </div>
@@ -76,25 +75,25 @@ export function UnitEconomicsWidget() {
             </div>
 
             {/* LTV:CAC Ratio Card */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-6 shadow-sm">
+            <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center justify-between">
                     <div>
-                        <p className="text-sm font-medium text-zinc-400">LTV:CAC Ratio</p>
-                        <p className={`mt-2 text-3xl font-bold ${ltvCacRatio >= 3 ? "text-emerald-400" : "text-yellow-400"}`}>
+                        <p className="text-sm font-medium text-zinc-500">LTV:CAC Ratio</p>
+                        <p className={`mt-2 text-3xl font-bold ${ltvCacRatio >= 3 ? "text-emerald-600" : "text-yellow-600"}`}>
                             {ltvCacRatio.toFixed(1)}x
                         </p>
                     </div>
-                    <div className={`rounded-full p-3 ${ltvCacRatio >= 3 ? "bg-emerald-500/10 text-emerald-400" : "bg-yellow-500/10 text-yellow-400"}`}>
+                    <div className={`rounded-full p-3 ${ltvCacRatio >= 3 ? "bg-emerald-50 text-emerald-600" : "bg-yellow-50 text-yellow-600"}`}>
                         <Activity className="h-6 w-6" />
                     </div>
                 </div>
                 <div className="mt-4 flex items-center text-xs">
                     {ltvCacRatio >= 3 ? (
-                        <span className="flex items-center text-emerald-400">
+                        <span className="flex items-center text-emerald-600">
                             <TrendingUp className="mr-1 h-3 w-3" /> Healthy Growth
                         </span>
                     ) : (
-                        <span className="text-yellow-400">Needs Optimization (Target 3.0x)</span>
+                        <span className="text-yellow-600">Needs Optimization (Target 3.0x)</span>
                     )}
                 </div>
             </div>
